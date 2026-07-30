@@ -202,7 +202,9 @@ class FisioterapeutaController extends Controller
             // Buscar el modelo Paciente por correo
             $pacienteModel = \App\Models\Paciente::where('correo', $cita->correo)->first();
             // Buscar el historial clínico más reciente de ese paciente (si existe)
-            $historial = $pacienteModel ? $pacienteModel->historiales()->latest()->first() : null;
+            $historial = $pacienteModel
+                ? $pacienteModel->historiales()->where('fisioterapeuta_id', $fisioterapeuta->id)->latest()->first()
+                : null;
 
             return [
                 'nombre' => $cita->nombres,
@@ -255,6 +257,46 @@ class FisioterapeutaController extends Controller
         ]);
 
         return back()->with('success', 'Nota agregada correctamente');
+    }
+
+    /**
+     * Guardar (o actualizar) la receta de una cita.
+     */
+    public function guardarReceta(Request $request, $id)
+    {
+        $cita = CitaPublica::findOrFail($id);
+        $user = Auth::user();
+        $fisioterapeuta = Fisioterapeuta::where('correo', $user->email)->first();
+
+        $validated = $request->validate([
+            'medicamentos' => 'required|string',
+            'indicaciones' => 'nullable|string',
+        ]);
+
+        \App\Models\Receta::updateOrCreate(
+            ['cita_publica_id' => $cita->id],
+            [
+                'fisioterapeuta_id' => $fisioterapeuta->id,
+                'medicamentos' => $validated['medicamentos'],
+                'indicaciones' => $validated['indicaciones'] ?? null,
+            ]
+        );
+
+        return back()->with('success', 'Receta guardada correctamente');
+    }
+
+    /**
+     * Vista imprimible de la receta de una cita.
+     */
+    public function verReceta($id)
+    {
+        $cita = CitaPublica::with('receta.fisioterapeuta', 'especialidad')->findOrFail($id);
+
+        if (!$cita->receta) {
+            return redirect()->back()->with('error', 'Esta cita todavía no tiene una receta guardada');
+        }
+
+        return view('medico.receta', ['cita' => $cita, 'receta' => $cita->receta]);
     }
 
     /**

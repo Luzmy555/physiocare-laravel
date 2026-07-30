@@ -14,8 +14,9 @@ class Cita extends Model
     protected $fillable = [
         'paciente_id',
         'fisioterapeuta_id',
-        'fecha_cita',
-        'hora_cita',
+        'especialidad_id',
+        'fecha',
+        'hora',
         'motivo',
         'estado'
     ];
@@ -30,5 +31,11 @@ class Cita extends Model
     public function fisioterapeuta()
     {
         return $this->belongsTo(Fisioterapeuta::class);
+    }
+
+    // Relación con especialidad
+    public function especialidad()
+    {
+        return $this->belongsTo(Especialidad::class);
     }
 }

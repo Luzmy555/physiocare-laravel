@@ -1,60 +1,40 @@
-@extends('layouts.app')
+<x-layouts.internal :title="'Cita - FisioCare Ayla'">
+    <x-ui.page-header title="Detalles de la Cita">
+        <x-slot:actions>
+            <x-ui.button :href="route('citas.edit', $cita->id)" variant="outline"><i class="fa-solid fa-pen"></i> Editar</x-ui.button>
+            <x-ui.button :href="route('citas.index')" variant="secondary">Volver</x-ui.button>
+        </x-slot:actions>
+    </x-ui.page-header>
 
-@section('content')
-<div class="container">
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h1>Detalles de la Cita</h1>
+    <x-ui.card>
+        <div class="mb-4 grid grid-cols-1 gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
+            <p><strong class="text-ink">Paciente:</strong> <span class="text-slate-600">{{ $cita->paciente->nombre ?? 'N/A' }} {{ $cita->paciente->apellido ?? '' }}</span></p>
+            <p><strong class="text-ink">Fisioterapeuta:</strong> <span class="text-slate-600">{{ $cita->fisioterapeuta->nombre ?? 'N/A' }} {{ $cita->fisioterapeuta->apellido ?? '' }}</span></p>
+            <p><strong class="text-ink">Email Paciente:</strong> <span class="text-slate-600">{{ $cita->paciente->correo ?? 'N/A' }}</span></p>
+            <p><strong class="text-ink">Especialidad:</strong> <span class="text-slate-600">{{ $cita->especialidad->nombre ?? 'N/A' }}</span></p>
+            <p><strong class="text-ink">Teléfono:</strong> <span class="text-slate-600">{{ $cita->paciente->telefono ?? 'N/A' }}</span></p>
+            <p><strong class="text-ink">Número Colegiatura:</strong> <span class="text-slate-600">{{ $cita->fisioterapeuta->numero_colegiado }}</span></p>
         </div>
-        <div class="col-md-4 text-end">
-            <a href="{{ route('citas.edit', $cita->id) }}" class="btn btn-warning">
-                <i class="bi bi-pencil"></i> Editar
-            </a>
-            <a href="{{ route('citas.index') }}" class="btn btn-secondary">Volver</a>
-        </div>
-    </div>
 
-    <div class="card">
-        <div class="card-header">
-            <h5>Información de la Cita</h5>
+        <div class="mb-4 grid grid-cols-1 gap-x-8 gap-y-2 border-t border-slate-100 pt-4 text-sm sm:grid-cols-2">
+            <p><strong class="text-ink">Fecha:</strong> <span class="text-slate-600">{{ $cita->fecha }}</span></p>
+            <p><strong class="text-ink">Hora:</strong> <span class="text-slate-600">{{ $cita->hora }}</span></p>
+            <p>
+                <strong class="text-ink">Estado:</strong>
+                @if ($cita->estado == 'pendiente')
+                    <x-ui.badge color="amber">Pendiente</x-ui.badge>
+                @elseif ($cita->estado == 'confirmada')
+                    <x-ui.badge color="green">Confirmada</x-ui.badge>
+                @else
+                    <x-ui.badge color="red">Cancelada</x-ui.badge>
+                @endif
+            </p>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>ID:</strong> {{ $cita->id }}</p>
-                    <p><strong>Paciente:</strong> {{ $cita->paciente->usuario->nombre ?? 'N/A' }} {{ $cita->paciente->usuario->apellido ?? '' }}</p>
-                    <p><strong>Email Paciente:</strong> {{ $cita->paciente->usuario->email ?? 'N/A' }}</p>
-                    <p><strong>Teléfono:</strong> {{ $cita->paciente->usuario->telefono ?? 'N/A' }}</p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>Fisioterapeuta:</strong> {{ $cita->fisioterapeuta->usuario->nombre ?? 'N/A' }} {{ $cita->fisioterapeuta->usuario->apellido ?? '' }}</p>
-                    <p><strong>Especialidad:</strong> {{ $cita->fisioterapeuta->especialidad->nombre ?? 'N/A' }}</p>
-                    <p><strong>Número Colegiatura:</strong> {{ $cita->fisioterapeuta->numero_colegiatura }}</p>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>Fecha:</strong> {{ $cita->fecha_cita }}</p>
-                    <p><strong>Hora:</strong> {{ $cita->hora_cita }}</p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>Estado:</strong>
-                        @if ($cita->estado == 'pendiente')
-                            <span class="badge bg-warning">Pendiente</span>
-                        @elseif ($cita->estado == 'completada')
-                            <span class="badge bg-success">Completada</span>
-                        @else
-                            <span class="badge bg-danger">Cancelada</span>
-                        @endif
-                    </p>
-                </div>
-            </div>
-            <hr>
-            <p><strong>Motivo:</strong></p>
-            <p>{{ $cita->motivo }}</p>
-            <p><strong>Registrada:</strong> {{ $cita->created_at->format('d/m/Y H:i') }}</p>
+
+        <div class="border-t border-slate-100 pt-4 text-sm">
+            <p class="mb-1 font-semibold text-ink">Motivo</p>
+            <p class="text-slate-600">{{ $cita->motivo }}</p>
+            <p class="mt-3 text-xs text-slate-400">Registrada: {{ $cita->created_at->format('d/m/Y H:i') }}</p>
         </div>
-    </div>
-</div>
-@endsection
+    </x-ui.card>
+</x-layouts.internal>

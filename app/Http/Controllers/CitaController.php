@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cita;
 use App\Models\Paciente;
 use App\Models\Fisioterapeuta;
+use App\Models\Especialidad;
 use Illuminate\Http\Request;
 
 class CitaController extends Controller
@@ -25,7 +26,8 @@ class CitaController extends Controller
     {
         $pacientes = Paciente::all();
         $fisioterapeutas = Fisioterapeuta::all();
-        return view('citas.create', compact('pacientes', 'fisioterapeutas'));
+        $especialidades = Especialidad::all();
+        return view('citas.create', compact('pacientes', 'fisioterapeutas', 'especialidades'));
     }
 
     /**
@@ -36,10 +38,11 @@ class CitaController extends Controller
         $validated = $request->validate([
             'paciente_id' => 'required|exists:pacientes,id',
             'fisioterapeuta_id' => 'required|exists:fisioterapeutas,id',
-            'fecha_cita' => 'required|date',
-            'hora_cita' => 'required|date_format:H:i',
+            'especialidad_id' => 'required|exists:especialidades,id',
+            'fecha' => 'required|date',
+            'hora' => 'required|date_format:H:i',
             'motivo' => 'required|string',
-            'estado' => 'required|in:pendiente,completada,cancelada'
+            'estado' => 'required|in:pendiente,confirmada,cancelada'
         ]);
 
         Cita::create($validated);
@@ -51,7 +54,7 @@ class CitaController extends Controller
      */
     public function show(Cita $cita)
     {
-        $cita->load('paciente', 'fisioterapeuta');
+        $cita->load('paciente', 'fisioterapeuta', 'especialidad');
         return view('citas.show', compact('cita'));
     }
 
@@ -62,7 +65,8 @@ class CitaController extends Controller
     {
         $pacientes = Paciente::all();
         $fisioterapeutas = Fisioterapeuta::all();
-        return view('citas.edit', compact('cita', 'pacientes', 'fisioterapeutas'));
+        $especialidades = Especialidad::all();
+        return view('citas.edit', compact('cita', 'pacientes', 'fisioterapeutas', 'especialidades'));
     }
 
     /**
@@ -73,10 +77,11 @@ class CitaController extends Controller
         $validated = $request->validate([
             'paciente_id' => 'required|exists:pacientes,id',
             'fisioterapeuta_id' => 'required|exists:fisioterapeutas,id',
-            'fecha_cita' => 'required|date',
-            'hora_cita' => 'required|date_format:H:i',
+            'especialidad_id' => 'required|exists:especialidades,id',
+            'fecha' => 'required|date',
+            'hora' => 'required|date_format:H:i',
             'motivo' => 'required|string',
-            'estado' => 'required|in:pendiente,completada,cancelada'
+            'estado' => 'required|in:pendiente,confirmada,cancelada'
         ]);
 
         $cita->update($validated);

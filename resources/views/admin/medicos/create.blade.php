@@ -1,85 +1,42 @@
-@extends('layouts.app')
+<x-layouts.internal :title="'Crear Médico - FisioCare Ayla'">
+    <x-ui.page-header title="Crear Fisioterapeuta" subtitle="Alta de un nuevo profesional" />
 
-@section('content')
-<div style="max-width: 900px; margin: 80px auto;">
-    <h1>➕ Crear Médico (Admin)</h1>
+    <x-ui.card class="mx-auto max-w-2xl">
+        @if(session('success'))
+            <div class="mb-6 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                {{ session('success') }}
+            </div>
+        @endif
 
-    <form action="{{ route('admin.medicos.store') }}" method="POST">
-        @csrf
+        <form action="{{ route('admin.medicos.store') }}" method="POST" class="space-y-5">
+            @csrf
 
-    @if(session('success'))
-        <div style="background:#dcfce7; border:1px solid #bbf7d0; padding:.75rem; margin: .75rem 0; border-radius:6px; color:#065f46;">
-            {{ session('success') }}
-        </div>
-    @endif
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <x-ui.input type="text" name="nombre" label="Nombre" :value="old('nombre')" required />
+                <x-ui.input type="text" name="apellido" label="Apellido" :value="old('apellido')" required />
+            </div>
 
-    @if($errors->any())
-        <div style="background:#fff1f2; border:1px solid #fecaca; padding:.75rem; margin: .75rem 0; border-radius:6px; color:#991b1b;">
-            <ul style="margin:0; padding-left:1.25rem;">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+            <x-ui.input type="email" name="correo" label="Email" :value="old('correo')" required />
+            <x-ui.input type="text" name="telefono" label="Teléfono" :value="old('telefono')" required />
 
-        <div style="margin-bottom: 1rem;">
-            <label>Nombre</label>
-            <input type="text" name="nombre" value="{{ old('nombre') }}" required style="width:100%; padding: .5rem;">
-            @error('nombre') <div style="color:#b91c1c; margin-top:.25rem;">{{ $message }}</div> @enderror
-        </div>
-
-        <div style="margin-bottom: 1rem;">
-            <label>Apellido</label>
-            <input type="text" name="apellido" value="{{ old('apellido') }}" required style="width:100%; padding: .5rem;">
-        </div>
-
-        <div style="margin-bottom: 1rem;">
-            <label>Email</label>
-            <input type="email" name="correo" value="{{ old('correo') }}" required style="width:100%; padding: .5rem;">
-            @error('correo') <div style="color:#b91c1c; margin-top:.25rem;">{{ $message }}</div> @enderror
-        </div>
-
-        <div style="margin-bottom: 1rem;">
-            <label>Teléfono</label>
-            <input type="text" name="telefono" value="{{ old('telefono') }}" required style="width:100%; padding: .5rem;">
-        </div>
-
-        <div style="margin-bottom: 1rem;">
-            <label>Especialidad</label>
-            <select name="especialidad_id" required style="width:100%; padding: .5rem;">
+            <x-ui.select name="especialidad_id" label="Especialidad" required>
                 <option value="">-- Seleccionar --</option>
                 @foreach($especialidades as $esp)
                     <option value="{{ $esp->id }}">{{ $esp->nombre }}</option>
                 @endforeach
-            </select>
-            @error('especialidad_id') <div style="color:#b91c1c; margin-top:.25rem;">{{ $message }}</div> @enderror
-        </div>
+            </x-ui.select>
 
+            <x-ui.input type="text" name="numero_colegiado" label="Número de Colegiado" :value="old('numero_colegiado')" required />
 
-        <div style="margin-bottom: 1rem;">
-            <label>Número de Colegiado</label>
-            <input type="text" name="numero_colegiado" value="{{ old('numero_colegiado') }}" required style="width:100%; padding: .5rem;">
-            @error('numero_colegiado') <div style="color:#b91c1c; margin-top:.25rem;">{{ $message }}</div> @enderror
-        </div>
-
-        <div style="margin-bottom: 1rem; display: flex; gap: 1rem;">
-            <div style="flex:1;">
-                <label>Horario Inicio</label>
-                <input type="time" name="horario_inicio" value="{{ old('horario_inicio') }}" style="width:100%; padding: .5rem;">
-                @error('horario_inicio') <div style="color:#b91c1c; margin-top:.25rem;">{{ $message }}</div> @enderror
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <x-ui.input type="time" name="horario_inicio" label="Horario Inicio" :value="old('horario_inicio')" />
+                <x-ui.input type="time" name="horario_fin" label="Horario Fin" :value="old('horario_fin')" />
             </div>
-            <div style="flex:1;">
-                <label>Horario Fin</label>
-                <input type="time" name="horario_fin" value="{{ old('horario_fin') }}" style="width:100%; padding: .5rem;">
-                @error('horario_fin') <div style="color:#b91c1c; margin-top:.25rem;">{{ $message }}</div> @enderror
-            </div>
-        </div>
 
-        <div style="display:flex; gap: .5rem;">
-            <a href="{{ route('admin.medicos.index') }}" class="btn" style="padding: .5rem 1rem; background:#e5e7eb;">Cancelar</a>
-            <button type="submit" style="padding: .5rem 1rem; background:#0066cc; color:white; border:none;">Crear Médico</button>
-        </div>
-    </form>
-</div>
-@endsection
+            <div class="flex gap-3 pt-2">
+                <x-ui.button type="submit" variant="success">Crear Médico</x-ui.button>
+                <x-ui.button :href="route('admin.medicos.index')" variant="secondary">Cancelar</x-ui.button>
+            </div>
+        </form>
+    </x-ui.card>
+</x-layouts.internal>

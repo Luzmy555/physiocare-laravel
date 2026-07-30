@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="960" height="600" fill="#f8fafc"/>
+
+  <!-- SIDEBAR -->
+  <rect x="0" y="0" width="220" height="600" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="20" y="20" width="36" height="36" rx="8" fill="#0066cc"/>
+  <text x="66" y="35" font-size="13" fill="#0f172a" font-weight="bold">FisioCare Ayla</text>
+  <text x="66" y="50" font-size="10" fill="#94a3b8">Panel interno</text>
+  <line x1="0" y1="76" x2="220" y2="76" stroke="#e2e8f0"/>
+
+  <g font-size="12">
+    <rect x="12" y="92" width="196" height="32" rx="8" fill="#0066cc" opacity="0.1"/>
+    <text x="28" y="112" fill="#0066cc" font-weight="bold">Inicio</text>
+    <text x="28" y="150" fill="#475569">Mis Citas</text>
+    <text x="28" y="188" fill="#475569">Historiales Clínicos</text>
+    <text x="28" y="226" fill="#475569">Mi Horario</text>
+  </g>
+
+  <line x1="0" y1="500" x2="220" y2="500" stroke="#e2e8f0"/>
+  <text x="28" y="530" font-size="12" fill="#475569">Mi Perfil</text>
+  <text x="28" y="562" font-size="12" fill="#ef4444">Cerrar Sesión</text>
+
+  <!-- MAIN -->
+  <text x="248" y="46" font-size="20" fill="#0f172a" font-weight="bold">Bienvenido/a, Dr. Carlos Martínez</text>
+  <text x="248" y="66" font-size="12" fill="#64748b">Especialidad: Traumatología · Última sesión: 28/07/2026 16:00</text>
+
+  <rect x="248" y="86" width="644" height="46" rx="10" fill="#0066cc" opacity="0.06"/>
+  <text x="264" y="114" font-size="12" fill="#0f172a">Hoy tienes <tspan font-weight="bold">6</tspan> citas programadas. Próxima cita a las <tspan font-weight="bold">13:00</tspan> con <tspan font-weight="bold">Laura Gómez</tspan>.</text>
+
+  <g>
+    <rect x="248" y="148" width="312" height="80" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="264" y="172" font-size="10" fill="#64748b">CITAS PENDIENTES</text>
+    <text x="264" y="204" font-size="22" fill="#0f172a" font-weight="bold">2</text>
+
+    <rect x="580" y="148" width="312" height="80" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="596" y="172" font-size="10" fill="#64748b">PACIENTES ATENDIDOS ESTE MES</text>
+    <text x="596" y="204" font-size="22" fill="#0f172a" font-weight="bold">21</text>
+  </g>
+
+  <rect x="248" y="248" width="644" height="180" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="268" y="278" font-size="13" fill="#0f172a" font-weight="bold">Agenda del Día</text>
+
+  <g font-size="11" fill="#64748b">
+    <text x="268" y="304">HORA</text>
+    <text x="340" y="304">PACIENTE</text>
+    <text x="600" y="304">ESTADO</text>
+  </g>
+  <line x1="268" y1="314" x2="872" y2="314" stroke="#f1f5f9"/>
+
+  <g font-size="12" fill="#334155">
+    <text x="268" y="340">09:00</text>
+    <text x="340" y="340">Laura Gómez</text>
+    <rect x="600" y="326" width="90" height="22" rx="11" fill="#dcfce7"/><text x="612" y="342" fill="#166534" font-size="10">Confirmada</text>
+
+    <text x="268" y="378">11:30</text>
+    <text x="340" y="378">Carlos Pérez</text>
+    <rect x="600" y="364" width="90" height="22" rx="11" fill="#fef3c7"/><text x="612" y="380" fill="#92400e" font-size="10">Pendiente</text>
+
+    <text x="268" y="416">13:00</text>
+    <text x="340" y="416">María Rodríguez</text>
+    <rect x="600" y="402" width="90" height="22" rx="11" fill="#dcfce7"/><text x="612" y="418" fill="#166534" font-size="10">Confirmada</text>
+  </g>
+
+  <text x="268" y="462" font-size="13" fill="#0f172a" font-weight="bold">Historiales Clínicos Recientes</text>
+  <text x="268" y="486" font-size="11" fill="#64748b">Laura Gómez — rehabilitación de rodilla, evolución favorable</text>
+  <text x="268" y="506" font-size="11" fill="#64748b">Pedro Alonso — terapia respiratoria, 3 sesiones completadas</text>
+</svg>

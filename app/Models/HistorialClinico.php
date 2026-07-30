@@ -14,7 +14,7 @@ class HistorialClinico extends Model
     protected $fillable = [
         'paciente_id',
         'fisioterapeuta_id',
-        'descripcion',
+        'observaciones',
         'diagnostico',
         'tratamiento'
     ];
@@ -29,5 +29,11 @@ class HistorialClinico extends Model
     public function fisioterapeuta()
     {
         return $this->belongsTo(Fisioterapeuta::class);
+    }
+
+    // Archivos adjuntos (notas, análisis, documentos)
+    public function archivos()
+    {
+        return $this->hasMany(HistorialArchivo::class);
     }
 }

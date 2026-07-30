@@ -1,70 +1,60 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h1>Roles</h1>
-        </div>
-        <div class="col-md-4 text-end">
-            <a href="{{ route('roles.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Nuevo Rol
-            </a>
-        </div>
-    </div>
+<x-layouts.internal :title="'Roles - FisioCare Ayla'">
+    <x-ui.page-header title="Roles" subtitle="Roles del sistema y usuarios asignados">
+        <x-slot:actions>
+            <x-ui.button :href="route('roles.create')"><i class="fa-solid fa-plus"></i> Nuevo Rol</x-ui.button>
+        </x-slot:actions>
+    </x-ui.page-header>
 
     @if ($message = Session::get('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ $message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
+        <div class="mb-6 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+            {{ $message }}
+        </div>
     @endif
 
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead class="table-dark">
+    @if ($roles->count() > 0)
+        <x-ui.table>
+            <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
                 <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Usuarios</th>
-                    <th>Acciones</th>
+                    <th class="px-6 py-3">Nombre</th>
+                    <th class="px-6 py-3">Descripción</th>
+                    <th class="px-6 py-3">Usuarios</th>
+                    <th class="px-6 py-3">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
-                @forelse ($roles as $rol)
-                <tr>
-                    <td>{{ $rol->id }}</td>
-                    <td>{{ $rol->nombre_rol }}</td>
-                    <td>{{ Str::limit($rol->descripcion, 50) }}</td>
-                    <td><span class="badge bg-info">{{ $rol->usuarios_count }}</span></td>
-                    <td>
-                        <a href="{{ route('roles.show', $rol->id) }}" class="btn btn-sm btn-info">
-                            <i class="bi bi-eye"></i>
-                        </a>
-                        <a href="{{ route('roles.edit', $rol->id) }}" class="btn btn-sm btn-warning">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <form action="{{ route('roles.destroy', $rol->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro?')">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="5" class="text-center">No hay roles registrados</td>
-                </tr>
-                @endforelse
+            <tbody class="divide-y divide-slate-100">
+                @foreach ($roles as $rol)
+                    <tr class="hover:bg-slate-50">
+                        <td class="px-6 py-3 font-semibold capitalize text-ink">{{ $rol->nombre_rol }}</td>
+                        <td class="px-6 py-3 text-slate-600">{{ Str::limit($rol->descripcion, 50) }}</td>
+                        <td class="px-6 py-3"><x-ui.badge color="blue">{{ $rol->usuarios_count }}</x-ui.badge></td>
+                        <td class="px-6 py-3">
+                            <div class="flex gap-2">
+                                <a href="{{ route('roles.show', $rol->id) }}" class="inline-flex items-center gap-1 rounded-lg bg-slate-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-600">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                <a href="{{ route('roles.edit', $rol->id) }}" class="inline-flex items-center gap-1 rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-600">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                                <form action="{{ route('roles.destroy', $rol->id) }}" method="POST" onsubmit="return confirm('¿Está seguro?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="inline-flex items-center gap-1 rounded-lg bg-red-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-600">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
-        </table>
-    </div>
+        </x-ui.table>
+    @else
+        <x-ui.card>
+            <x-ui.empty-state icon="fa-user-shield" title="No hay roles registrados" />
+        </x-ui.card>
+    @endif
 
-    <div class="d-flex justify-content-center">
+    <div class="mt-6 flex justify-center">
         {{ $roles->links() }}
     </div>
-</div>
-@endsection
+</x-layouts.internal>

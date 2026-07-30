@@ -18,9 +18,10 @@ class DashboardController extends Controller
         $rol = $user->rol ? $user->rol->nombre_rol : null;
 
         // Redirigir a vista específica según rol
+        // Nota: el rol almacenado es 'medico' (ver RolesTableSeeder), no 'fisioterapeuta'.
         if ($rol === 'paciente') {
             return $this->dashboardPaciente($user);
-        } elseif ($rol === 'fisioterapeuta') {
+        } elseif ($rol === 'medico') {
             return $this->dashboardFisioterapeuta($user);
         } elseif ($rol === 'admin') {
             return $this->dashboardAdmin($user);

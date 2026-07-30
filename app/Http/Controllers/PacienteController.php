@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paciente;
-use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class PacienteController extends Controller
@@ -13,7 +12,7 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        $pacientes = Paciente::with('usuario')->paginate(10);
+        $pacientes = Paciente::paginate(10);
         return view('pacientes.index', compact('pacientes'));
     }
 
@@ -22,8 +21,7 @@ class PacienteController extends Controller
      */
     public function create()
     {
-        $usuarios = Usuario::all();
-        return view('pacientes.create', compact('usuarios'));
+        return view('pacientes.create');
     }
 
     /**
@@ -32,7 +30,10 @@ class PacienteController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id',
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'nullable|string|max:255',
+            'cedula' => 'nullable|string|max:255|unique:pacientes,cedula',
+            'correo' => 'nullable|email|max:255|unique:pacientes,correo',
             'fecha_nacimiento' => 'required|date',
             'direccion' => 'required|string',
             'telefono' => 'required|string',
@@ -48,7 +49,7 @@ class PacienteController extends Controller
      */
     public function show(Paciente $paciente)
     {
-        $paciente->load('usuario', 'citas', 'historiales');
+        $paciente->load('citas', 'historiales');
         return view('pacientes.show', compact('paciente'));
     }
 
@@ -57,8 +58,7 @@ class PacienteController extends Controller
      */
     public function edit(Paciente $paciente)
     {
-        $usuarios = Usuario::all();
-        return view('pacientes.edit', compact('paciente', 'usuarios'));
+        return view('pacientes.edit', compact('paciente'));
     }
 
     /**
@@ -67,7 +67,10 @@ class PacienteController extends Controller
     public function update(Request $request, Paciente $paciente)
     {
         $validated = $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id',
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'nullable|string|max:255',
+            'cedula' => 'nullable|string|max:255|unique:pacientes,cedula,' . $paciente->id,
+            'correo' => 'nullable|email|max:255|unique:pacientes,correo,' . $paciente->id,
             'fecha_nacimiento' => 'required|date',
             'direccion' => 'required|string',
             'telefono' => 'required|string',

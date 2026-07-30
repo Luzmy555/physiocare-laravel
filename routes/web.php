@@ -24,21 +24,45 @@ Route::get('/agendar-cita', [CitasPublicasController::class, 'create'])->name('c
 Route::post('/agendar-cita', [CitasPublicasController::class, 'store'])->name('citas.publicas.store');
 Route::get('/api/fisioterapeutas/{especialidadId}', [CitasPublicasController::class, 'obtenerFisioterapeutas'])->name('api.fisioterapeutas');
 
-// Resource routes
-Route::resource('pacientes', PacienteController::class);
-Route::resource('fisioterapeutas', FisioterapeutaController::class);
-Route::resource('especialidades', EspecialidadController::class);
-Route::resource('citas', CitaController::class);
-Route::resource('historiales', HistorialClinicoController::class);
-Route::resource('roles', RolController::class);
-
 Route::middleware('auth')->group(function () {
+    // Solo admin gestiona el catálogo completo de pacientes/fisioterapeutas/especialidades/
+    // citas internas/roles — el médico tiene sus propias vistas ya acotadas a lo suyo
+    // (/medico/mis-citas, /medico/mis-pacientes) y el paciente ve lo suyo desde /dashboard.
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('pacientes', PacienteController::class);
+        Route::resource('fisioterapeutas', FisioterapeutaController::class);
+        // ->parameters(): Laravel's English singularizer mangles these Spanish resource
+        // names ("especialidades" -> "especialidade", "roles" -> "role"), which don't
+        // match the controllers' typed parameter names ($especialidad, $rol) and
+        // silently breaks implicit route-model binding (an empty model gets injected
+        // instead of the real one).
+        Route::resource('especialidades', EspecialidadController::class)->parameters(['especialidades' => 'especialidad']);
+        Route::resource('citas', CitaController::class);
+        Route::resource('roles', RolController::class)->parameters(['roles' => 'rol']);
+    });
+
+    // Historiales clínicos: admin ve todos; el médico solo los de sus propios pacientes
+    // (el HistorialClinicoController filtra por su fisioterapeuta_id). El paciente no
+    // tiene acceso — no hay una vista propia de "mi historial" todavía.
+    Route::middleware('role:admin,medico')->group(function () {
+        // ->parameters(): ver nota arriba — "historiales" -> "historiale" no coincide
+        // con $historial en el controlador.
+        Route::resource('historiales', HistorialClinicoController::class)->parameters(['historiales' => 'historial']);
+
+        // Archivos adjuntos de un historial clínico
+        Route::post('/historiales/{historial}/archivos', [HistorialClinicoController::class, 'storeArchivo'])->name('historiales.archivos.store');
+        Route::get('/historiales/archivos/{archivo}/descargar', [HistorialClinicoController::class, 'downloadArchivo'])->name('historiales.archivos.download');
+        Route::delete('/historiales/archivos/{archivo}', [HistorialClinicoController::class, 'destroyArchivo'])->name('historiales.archivos.destroy');
+    });
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Rutas para Fisioterapeutas
-Route::middleware('role:fisioterapeuta')->group(function () {
+    // El rol sembrado/almacenado es 'medico' (ver RolesTableSeeder), no 'fisioterapeuta';
+    // con el nombre anterior este middleware nunca dejaba pasar a nadie (siempre 403).
+Route::middleware('role:medico')->group(function () {
 
     Route::get('/medico/citas-hoy', [FisioterapeutaController::class, 'citasHoy'])
         ->name('medico.citas-hoy');
@@ -60,6 +84,12 @@ Route::middleware('role:fisioterapeuta')->group(function () {
 
     Route::post('/medico/cita/{id}/agregar-nota', [FisioterapeutaController::class, 'agregarNota'])
         ->name('medico.agregar-nota');
+
+    Route::post('/medico/cita/{id}/receta', [FisioterapeutaController::class, 'guardarReceta'])
+        ->name('medico.guardar-receta');
+
+    Route::get('/medico/cita/{id}/receta', [FisioterapeutaController::class, 'verReceta'])
+        ->name('medico.ver-receta');
 
 });
 

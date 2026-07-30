@@ -1,62 +1,45 @@
-@extends('layouts.app')
+<x-layouts.internal :title="'Especialidad - FisioCare Ayla'">
+    <x-ui.page-header title="Detalles de la Especialidad">
+        <x-slot:actions>
+            <x-ui.button :href="route('especialidades.edit', $especialidad->id)" variant="outline"><i class="fa-solid fa-pen"></i> Editar</x-ui.button>
+            <x-ui.button :href="route('especialidades.index')" variant="secondary">Volver</x-ui.button>
+        </x-slot:actions>
+    </x-ui.page-header>
 
-@section('content')
-<div class="container">
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h1>Detalles de la Especialidad</h1>
-        </div>
-        <div class="col-md-4 text-end">
-            <a href="{{ route('especialidades.edit', $especialidad->id) }}" class="btn btn-warning">
-                <i class="bi bi-pencil"></i> Editar
-            </a>
-            <a href="{{ route('especialidades.index') }}" class="btn btn-secondary">Volver</a>
-        </div>
-    </div>
+    <x-ui.card class="mb-6">
+        <p class="mb-2 text-sm"><strong class="text-ink">Nombre:</strong> <span class="text-slate-600">{{ $especialidad->nombre }}</span></p>
+        <p class="mb-1 text-sm"><strong class="text-ink">Descripción:</strong></p>
+        <p class="mb-2 text-sm text-slate-600">{{ $especialidad->descripcion }}</p>
+        <p class="text-sm"><strong class="text-ink">Registrado:</strong> <span class="text-slate-600">{{ $especialidad->created_at->format('d/m/Y H:i') }}</span></p>
+    </x-ui.card>
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5>Información</h5>
+    <x-ui.card padding="p-0">
+        <div class="border-b border-slate-100 px-6 py-4">
+            <p class="font-poppins text-base font-bold text-ink">Fisioterapeutas ({{ $especialidad->fisioterapeutas->count() }})</p>
         </div>
-        <div class="card-body">
-            <p><strong>ID:</strong> {{ $especialidad->id }}</p>
-            <p><strong>Nombre:</strong> {{ $especialidad->nombre }}</p>
-            <p><strong>Descripción:</strong></p>
-            <p>{{ $especialidad->descripcion }}</p>
-            <p><strong>Registrado:</strong> {{ $especialidad->created_at->format('d/m/Y H:i') }}</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header">
-            <h5>Fisioterapeutas ({{ $especialidad->fisioterapeutas->count() }})</h5>
-        </div>
-        <div class="card-body">
-            @if ($especialidad->fisioterapeutas->count() > 0)
-            <table class="table table-sm">
-                <thead>
+        @if ($especialidad->fisioterapeutas->count() > 0)
+            <x-ui.table>
+                <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
                     <tr>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Número Colegiatura</th>
-                        <th>Teléfono</th>
+                        <th class="px-6 py-3">Nombre</th>
+                        <th class="px-6 py-3">Email</th>
+                        <th class="px-6 py-3">Número Colegiatura</th>
+                        <th class="px-6 py-3">Teléfono</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-slate-100">
                     @foreach ($especialidad->fisioterapeutas as $fisiote)
-                    <tr>
-                        <td>{{ $fisiote->usuario->nombre ?? 'N/A' }} {{ $fisiote->usuario->apellido ?? '' }}</td>
-                        <td>{{ $fisiote->usuario->email ?? 'N/A' }}</td>
-                        <td>{{ $fisiote->numero_colegiatura }}</td>
-                        <td>{{ $fisiote->usuario->telefono ?? 'N/A' }}</td>
-                    </tr>
+                        <tr>
+                            <td class="px-6 py-3">{{ $fisiote->nombre ?? 'N/A' }} {{ $fisiote->apellido ?? '' }}</td>
+                            <td class="px-6 py-3">{{ $fisiote->correo ?? 'N/A' }}</td>
+                            <td class="px-6 py-3">{{ $fisiote->numero_colegiado }}</td>
+                            <td class="px-6 py-3">{{ $fisiote->telefono ?? 'N/A' }}</td>
+                        </tr>
                     @endforeach
                 </tbody>
-            </table>
-            @else
-            <p class="text-muted">No hay fisioterapeutas en esta especialidad</p>
-            @endif
-        </div>
-    </div>
-</div>
-@endsection
+            </x-ui.table>
+        @else
+            <p class="px-6 py-6 text-sm text-slate-400">No hay fisioterapeutas en esta especialidad</p>
+        @endif
+    </x-ui.card>
+</x-layouts.internal>

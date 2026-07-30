@@ -1,103 +1,80 @@
-@extends('layouts.app')
+<x-layouts.internal :title="'Paciente - FisioCare Ayla'">
+    <x-ui.page-header title="Detalles del Paciente">
+        <x-slot:actions>
+            <x-ui.button :href="route('pacientes.edit', $paciente->id)" variant="outline"><i class="fa-solid fa-pen"></i> Editar</x-ui.button>
+            <x-ui.button :href="route('pacientes.index')" variant="secondary">Volver</x-ui.button>
+        </x-slot:actions>
+    </x-ui.page-header>
 
-@section('content')
-<div class="container">
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h1>Detalles del Paciente</h1>
+    <x-ui.card class="mb-6">
+        <div class="grid grid-cols-1 gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
+            <p><strong class="text-ink">Usuario:</strong> <span class="text-slate-600">{{ $paciente->nombre ?? 'N/A' }} {{ $paciente->apellido ?? '' }}</span></p>
+            <p><strong class="text-ink">Email:</strong> <span class="text-slate-600">{{ $paciente->correo ?? 'N/A' }}</span></p>
+            <p><strong class="text-ink">Fecha de Nacimiento:</strong> <span class="text-slate-600">{{ $paciente->fecha_nacimiento }}</span></p>
+            <p><strong class="text-ink">Dirección:</strong> <span class="text-slate-600">{{ $paciente->direccion }}</span></p>
+            <p><strong class="text-ink">Teléfono:</strong> <span class="text-slate-600">{{ $paciente->telefono }}</span></p>
+            <p><strong class="text-ink">Sexo:</strong> <span class="text-slate-600">{{ $paciente->sexo == 'M' ? 'Masculino' : 'Femenino' }}</span></p>
+            <p><strong class="text-ink">Registrado:</strong> <span class="text-slate-600">{{ $paciente->created_at->format('d/m/Y H:i') }}</span></p>
         </div>
-        <div class="col-md-4 text-end">
-            <a href="{{ route('pacientes.edit', $paciente->id) }}" class="btn btn-warning">
-                <i class="bi bi-pencil"></i> Editar
-            </a>
-            <a href="{{ route('pacientes.index') }}" class="btn btn-secondary">Volver</a>
-        </div>
-    </div>
+    </x-ui.card>
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5>Información del Paciente</h5>
+    <x-ui.card class="mb-6" padding="p-0">
+        <div class="border-b border-slate-100 px-6 py-4">
+            <p class="font-poppins text-base font-bold text-ink">Citas ({{ $paciente->citas->count() }})</p>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>ID:</strong> {{ $paciente->id }}</p>
-                    <p><strong>Usuario:</strong> {{ $paciente->usuario->nombre ?? 'N/A' }} {{ $paciente->usuario->apellido ?? '' }}</p>
-                    <p><strong>Email:</strong> {{ $paciente->usuario->email ?? 'N/A' }}</p>
-                    <p><strong>Fecha de Nacimiento:</strong> {{ $paciente->fecha_nacimiento }}</p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>Dirección:</strong> {{ $paciente->direccion }}</p>
-                    <p><strong>Teléfono:</strong> {{ $paciente->telefono }}</p>
-                    <p><strong>Sexo:</strong> {{ $paciente->sexo == 'M' ? 'Masculino' : 'Femenino' }}</p>
-                    <p><strong>Registrado:</strong> {{ $paciente->created_at->format('d/m/Y H:i') }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5>Citas ({{ $paciente->citas->count() }})</h5>
-        </div>
-        <div class="card-body">
-            @if ($paciente->citas->count() > 0)
-            <table class="table table-sm">
-                <thead>
+        @if ($paciente->citas->count() > 0)
+            <x-ui.table>
+                <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
                     <tr>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Fisioterapeuta</th>
-                        <th>Motivo</th>
-                        <th>Estado</th>
+                        <th class="px-6 py-3">Fecha</th>
+                        <th class="px-6 py-3">Hora</th>
+                        <th class="px-6 py-3">Fisioterapeuta</th>
+                        <th class="px-6 py-3">Motivo</th>
+                        <th class="px-6 py-3">Estado</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-slate-100">
                     @foreach ($paciente->citas as $cita)
-                    <tr>
-                        <td>{{ $cita->fecha_cita }}</td>
-                        <td>{{ $cita->hora_cita }}</td>
-                        <td>{{ $cita->fisioterapeuta->usuario->nombre ?? 'N/A' }}</td>
-                        <td>{{ $cita->motivo }}</td>
-                        <td><span class="badge bg-secondary">{{ $cita->estado }}</span></td>
-                    </tr>
+                        <tr>
+                            <td class="px-6 py-3">{{ $cita->fecha_cita }}</td>
+                            <td class="px-6 py-3">{{ $cita->hora_cita }}</td>
+                            <td class="px-6 py-3">{{ $cita->fisioterapeuta->nombre ?? 'N/A' }}</td>
+                            <td class="px-6 py-3">{{ $cita->motivo }}</td>
+                            <td class="px-6 py-3"><x-ui.badge>{{ $cita->estado }}</x-ui.badge></td>
+                        </tr>
                     @endforeach
                 </tbody>
-            </table>
-            @else
-            <p class="text-muted">No hay citas registradas</p>
-            @endif
-        </div>
-    </div>
+            </x-ui.table>
+        @else
+            <p class="px-6 py-6 text-sm text-slate-400">No hay citas registradas</p>
+        @endif
+    </x-ui.card>
 
-    <div class="card">
-        <div class="card-header">
-            <h5>Historiales Clínicos ({{ $paciente->historiales->count() }})</h5>
+    <x-ui.card padding="p-0">
+        <div class="border-b border-slate-100 px-6 py-4">
+            <p class="font-poppins text-base font-bold text-ink">Historiales Clínicos ({{ $paciente->historiales->count() }})</p>
         </div>
-        <div class="card-body">
-            @if ($paciente->historiales->count() > 0)
-            <table class="table table-sm">
-                <thead>
+        @if ($paciente->historiales->count() > 0)
+            <x-ui.table>
+                <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
                     <tr>
-                        <th>Fecha</th>
-                        <th>Fisioterapeuta</th>
-                        <th>Diagnóstico</th>
+                        <th class="px-6 py-3">Fecha</th>
+                        <th class="px-6 py-3">Fisioterapeuta</th>
+                        <th class="px-6 py-3">Diagnóstico</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-slate-100">
                     @foreach ($paciente->historiales as $historial)
-                    <tr>
-                        <td>{{ $historial->created_at->format('d/m/Y') }}</td>
-                        <td>{{ $historial->fisioterapeuta->usuario->nombre ?? 'N/A' }}</td>
-                        <td>{{ $historial->diagnostico }}</td>
-                    </tr>
+                        <tr>
+                            <td class="px-6 py-3">{{ $historial->created_at->format('d/m/Y') }}</td>
+                            <td class="px-6 py-3">{{ $historial->fisioterapeuta->nombre ?? 'N/A' }}</td>
+                            <td class="px-6 py-3">{{ $historial->diagnostico }}</td>
+                        </tr>
                     @endforeach
                 </tbody>
-            </table>
-            @else
-            <p class="text-muted">No hay historiales clínicos registrados</p>
-            @endif
-        </div>
-    </div>
-</div>
-@endsection
+            </x-ui.table>
+        @else
+            <p class="px-6 py-6 text-sm text-slate-400">No hay historiales clínicos registrados</p>
+        @endif
+    </x-ui.card>
+</x-layouts.internal>

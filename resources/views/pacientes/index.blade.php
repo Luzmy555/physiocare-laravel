@@ -1,72 +1,64 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h1>Pacientes</h1>
-        </div>
-        <div class="col-md-4 text-end">
-            <a href="{{ route('pacientes.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Nuevo Paciente
-            </a>
-        </div>
-    </div>
+<x-layouts.internal :title="'Pacientes - FisioCare Ayla'">
+    <x-ui.page-header title="Pacientes" subtitle="Directorio de pacientes registrados">
+        <x-slot:actions>
+            <x-ui.button :href="route('pacientes.create')"><i class="fa-solid fa-plus"></i> Nuevo Paciente</x-ui.button>
+        </x-slot:actions>
+    </x-ui.page-header>
 
     @if ($message = Session::get('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ $message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
+        <div class="mb-6 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+            {{ $message }}
+        </div>
     @endif
 
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead class="table-dark">
+    @if ($pacientes->count() > 0)
+        <x-ui.table>
+            <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
                 <tr>
-                    <th>ID</th>
-                    <th>Usuario</th>
-                    <th>Fecha Nacimiento</th>
-                    <th>Teléfono</th>
-                    <th>Sexo</th>
-                    <th>Acciones</th>
+                    <th class="px-6 py-3">Nombre</th>
+                    <th class="px-6 py-3">Cédula</th>
+                    <th class="px-6 py-3">Fecha Nacimiento</th>
+                    <th class="px-6 py-3">Teléfono</th>
+                    <th class="px-6 py-3">Sexo</th>
+                    <th class="px-6 py-3">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
-                @forelse ($pacientes as $paciente)
-                <tr>
-                    <td>{{ $paciente->id }}</td>
-                    <td>{{ $paciente->usuario->nombre ?? 'N/A' }} {{ $paciente->usuario->apellido ?? '' }}</td>
-                    <td>{{ $paciente->fecha_nacimiento }}</td>
-                    <td>{{ $paciente->telefono }}</td>
-                    <td>{{ $paciente->sexo == 'M' ? 'Masculino' : 'Femenino' }}</td>
-                    <td>
-                        <a href="{{ route('pacientes.show', $paciente->id) }}" class="btn btn-sm btn-info">
-                            <i class="bi bi-eye"></i>
-                        </a>
-                        <a href="{{ route('pacientes.edit', $paciente->id) }}" class="btn btn-sm btn-warning">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <form action="{{ route('pacientes.destroy', $paciente->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro?')">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="6" class="text-center">No hay pacientes registrados</td>
-                </tr>
-                @endforelse
+            <tbody class="divide-y divide-slate-100">
+                @foreach ($pacientes as $paciente)
+                    <tr class="hover:bg-slate-50">
+                        <td class="px-6 py-3 font-semibold text-ink">{{ $paciente->nombre }} {{ $paciente->apellido }}</td>
+                        <td class="px-6 py-3 text-slate-600">{{ $paciente->cedula ?? '—' }}</td>
+                        <td class="px-6 py-3 text-slate-600">{{ $paciente->fecha_nacimiento }}</td>
+                        <td class="px-6 py-3 text-slate-600">{{ $paciente->telefono }}</td>
+                        <td class="px-6 py-3 text-slate-600">{{ $paciente->sexo == 'M' ? 'Masculino' : 'Femenino' }}</td>
+                        <td class="px-6 py-3">
+                            <div class="flex gap-2">
+                                <a href="{{ route('pacientes.show', $paciente->id) }}" class="inline-flex items-center gap-1 rounded-lg bg-slate-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-600">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                <a href="{{ route('pacientes.edit', $paciente->id) }}" class="inline-flex items-center gap-1 rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-600">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                                <form action="{{ route('pacientes.destroy', $paciente->id) }}" method="POST" onsubmit="return confirm('¿Está seguro?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="inline-flex items-center gap-1 rounded-lg bg-red-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-600">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
-        </table>
-    </div>
+        </x-ui.table>
+    @else
+        <x-ui.card>
+            <x-ui.empty-state icon="fa-user-injured" title="No hay pacientes registrados" />
+        </x-ui.card>
+    @endif
 
-    <div class="d-flex justify-content-center">
+    <div class="mt-6 flex justify-center">
         {{ $pacientes->links() }}
     </div>
-</div>
-@endsection
+</x-layouts.internal>

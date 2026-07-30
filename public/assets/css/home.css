@@ -1,6 +1,6 @@
 main-wrapper, .main-wrapper, .page-wrapper, .content-wrapper, main {
   min-height: 100vh;
-  background: #0b4444 !important;
+  background: #f5f7fa;
 }
 /* Botón Cancelar Rojo */
 .btn-danger {
@@ -19,11 +19,11 @@ main-wrapper, .main-wrapper, .page-wrapper, .content-wrapper, main {
   background: #b52a37 !important;
   border-color: #b52a37 !important;
 }
-/* Botones sólidos para gestión */
+/* Botones sólidos para gestión — familia de color coherente con la marca (azul/teal/índigo/pizarra) */
 .btn-usuarios {
-  background: #6c3ef1 !important; /* morado sólido */
+  background: #0066cc !important; /* azul principal */
   color: #fff !important;
-  border: 2px solid #6c3ef1;
+  border: 2px solid #0066cc;
   border-radius: 10px;
   padding: 1.5rem;
   text-align: center;
@@ -33,13 +33,13 @@ main-wrapper, .main-wrapper, .page-wrapper, .content-wrapper, main {
   display: inline-block;
 }
 .btn-usuarios:hover {
-  background: #4b2991 !important;
+  background: #004c99 !important;
 }
 
 .btn-medicos {
-  background: #14532d !important; /* verde oscuro sólido */
+  background: #00a080 !important; /* teal (acento de marca) */
   color: #fff !important;
-  border: 2px solid #14532d;
+  border: 2px solid #00a080;
   border-radius: 10px;
   padding: 1.5rem;
   text-align: center;
@@ -49,13 +49,13 @@ main-wrapper, .main-wrapper, .page-wrapper, .content-wrapper, main {
   display: inline-block;
 }
 .btn-medicos:hover {
-  background: #0f3a1a !important;
+  background: #00785f !important;
 }
 
 .btn-citas {
-  background: #f59e0b !important; /* naranja sólido */
+  background: #4f46e5 !important; /* índigo */
   color: #fff !important;
-  border: 2px solid #f59e0b;
+  border: 2px solid #4f46e5;
   border-radius: 10px;
   padding: 1.5rem;
   text-align: center;
@@ -65,13 +65,13 @@ main-wrapper, .main-wrapper, .page-wrapper, .content-wrapper, main {
   display: inline-block;
 }
 .btn-citas:hover {
-  background: #b45309 !important;
+  background: #3730a3 !important;
 }
 
 .btn-config {
-  background: #374151 !important; /* gris oscuro sólido */
+  background: #475569 !important; /* azul pizarra */
   color: #fff !important;
-  border: 2px solid #374151;
+  border: 2px solid #475569;
   border-radius: 10px;
   padding: 1.5rem;
   text-align: center;
@@ -81,7 +81,7 @@ main-wrapper, .main-wrapper, .page-wrapper, .content-wrapper, main {
   display: inline-block;
 }
 .btn-config:hover {
-  background: #111827 !important;
+  background: #334155 !important;
 }
 /* Restaurar color original del texto 'Iniciar Sesión' */
 .auth-header h1, .btn-login {
@@ -123,32 +123,32 @@ main-wrapper, .main-wrapper, .page-wrapper, .content-wrapper, main {
   color: #fff !important;
 }
 .btn-usuarios {
-  background: #6c3ef1 !important; /* morado sólido */
+  background: #0066cc !important;
   color: #fff !important;
   }
   .btn-usuarios:hover {
-    background: #4b2991 !important; /* morado más oscuro en hover */
+    background: #004c99 !important;
 }
 .btn-medicos {
-  background: #14532d !important; /* verde oscuro sólido */
+  background: #00a080 !important;
   color: #fff !important;
   }
   .btn-medicos:hover {
-    background: #0f3a1a !important; /* verde más oscuro en hover */
+    background: #00785f !important;
 }
 .btn-citas {
-  background: #f59e0b !important; /* naranja sólido */
+  background: #4f46e5 !important;
   color: #fff !important;
   }
   .btn-citas:hover {
-    background: #b45309 !important; /* naranja más oscuro en hover */
+    background: #3730a3 !important;
 }
 .btn-config {
-  background: #374151 !important; /* gris oscuro sólido */
+  background: #475569 !important;
   color: #fff !important;
   }
   .btn-config:hover {
-    background: #111827 !important; /* gris más oscuro en hover */
+    background: #334155 !important;
 }
 /* ====== ESTILOS SOLICITADOS ====== */
 
@@ -279,7 +279,7 @@ html {
 body {
 font-family: 'Inter', sans-serif;
   background-color: var(--white);
-  color: #ffffffff;
+  color: var(--dark);
   line-height: 1.6;
 }
 
@@ -1090,7 +1090,7 @@ color: var(--dark);
 }
 
 body.dashboard-scope {
-  background: #001616;
+  background: #f5f7fa;
   color: var(--dark);
 }
 
@@ -1101,7 +1101,8 @@ body.dashboard-scope {
 }
  main-wrapper, .page-wrapper, .content-wrapper, main {
   min-height: 100vh; /* ocupa toda la altura de la ventana */
-  background: #0b4444; /* si tu fondo está en body, color arternativo azul1b1b71 evita sobrescribirlo */}
+  background: #f5f7fa;
+}
 
 .dashboard-sidebar {
   width: 260px;
@@ -1156,13 +1157,11 @@ body.dashboard-scope {
 .dashboard-content { flex:1; margin-left:260px; padding:2rem; }
 
 .page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; }
-.page-title { font-size:28px; font-weight:700; color:white; }
-  .page-title { font-size:28px; font-weight:700; color:#f3f4f6; text-shadow: 0 2px 8px rgba(0,0,0,0.12); }
-.page-subtitle { font-size:14px; color:rgb(246, 247, 252); margin-top:0.5rem; }
+.page-title { font-size:28px; font-weight:700; color:var(--dark); }
+.page-subtitle { font-size:14px; color:var(--gray-text); margin-top:0.5rem; }
 
 .btn-primary-outline { padding:10px 20px; border:2px solid var(--primary); background:transparent; color:var(--primary); border-radius:8px; font-weight:600; font-size:14px; cursor:pointer; transition:all .2s; text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem; }
-.btn-primary-outline:hover { background:#033E3E;
-; color:white; }
+.btn-primary-outline:hover { background:var(--primary); color:white; }
 
 
 .stats-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:1.5rem; margin-bottom:2rem; }

@@ -12,18 +12,15 @@ class Paciente extends Model
     protected $table = 'pacientes';
 
     protected $fillable = [
-        'usuario_id',
+        'nombre',
+        'apellido',
+        'cedula',
+        'telefono',
+        'correo',
         'fecha_nacimiento',
         'direccion',
-        'telefono',
         'sexo'
     ];
-
-    // El paciente pertenece a un usuario
-    public function usuario()
-    {
-        return $this->belongsTo(Usuario::class);
-    }
 
     // Un paciente tiene muchas citas
     public function citas()

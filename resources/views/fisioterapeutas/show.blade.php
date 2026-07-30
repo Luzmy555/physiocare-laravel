@@ -1,72 +1,51 @@
-@extends('layouts.app')
+<x-layouts.internal :title="'Fisioterapeuta - FisioCare Ayla'">
+    <x-ui.page-header title="Detalles del Fisioterapeuta">
+        <x-slot:actions>
+            <x-ui.button :href="route('fisioterapeutas.edit', $fisioterapeuta->id)" variant="outline"><i class="fa-solid fa-pen"></i> Editar</x-ui.button>
+            <x-ui.button :href="route('fisioterapeutas.index')" variant="secondary">Volver</x-ui.button>
+        </x-slot:actions>
+    </x-ui.page-header>
 
-@section('content')
-<div class="container">
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h1>Detalles del Fisioterapeuta</h1>
+    <x-ui.card class="mb-6">
+        <div class="grid grid-cols-1 gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
+            <p><strong class="text-ink">Nombre:</strong> <span class="text-slate-600">{{ $fisioterapeuta->nombre ?? 'N/A' }} {{ $fisioterapeuta->apellido ?? '' }}</span></p>
+            <p><strong class="text-ink">Email:</strong> <span class="text-slate-600">{{ $fisioterapeuta->correo ?? 'N/A' }}</span></p>
+            <p><strong class="text-ink">Especialidad:</strong> <span class="text-slate-600">{{ $fisioterapeuta->especialidad->nombre ?? 'N/A' }}</span></p>
+            <p><strong class="text-ink">Número Colegiatura:</strong> <span class="text-slate-600">{{ $fisioterapeuta->numero_colegiado }}</span></p>
+            <p><strong class="text-ink">Teléfono:</strong> <span class="text-slate-600">{{ $fisioterapeuta->telefono ?? 'N/A' }}</span></p>
+            <p><strong class="text-ink">Registrado:</strong> <span class="text-slate-600">{{ $fisioterapeuta->created_at->format('d/m/Y H:i') }}</span></p>
         </div>
-        <div class="col-md-4 text-end">
-            <a href="{{ route('fisioterapeutas.edit', $fisioterapeuta->id) }}" class="btn btn-warning">
-                <i class="bi bi-pencil"></i> Editar
-            </a>
-            <a href="{{ route('fisioterapeutas.index') }}" class="btn btn-secondary">Volver</a>
-        </div>
-    </div>
+    </x-ui.card>
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5>Información del Fisioterapeuta</h5>
+    <x-ui.card padding="p-0">
+        <div class="border-b border-slate-100 px-6 py-4">
+            <p class="font-poppins text-base font-bold text-ink">Citas ({{ $fisioterapeuta->citas->count() }})</p>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>ID:</strong> {{ $fisioterapeuta->id }}</p>
-                    <p><strong>Nombre:</strong> {{ $fisioterapeuta->usuario->nombre ?? 'N/A' }} {{ $fisioterapeuta->usuario->apellido ?? '' }}</p>
-                    <p><strong>Email:</strong> {{ $fisioterapeuta->usuario->email ?? 'N/A' }}</p>
-                    <p><strong>Especialidad:</strong> {{ $fisioterapeuta->especialidad->nombre ?? 'N/A' }}</p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>Número Colegiatura:</strong> {{ $fisioterapeuta->numero_colegiatura }}</p>
-                    <p><strong>Teléfono:</strong> {{ $fisioterapeuta->usuario->telefono ?? 'N/A' }}</p>
-                    <p><strong>Registrado:</strong> {{ $fisioterapeuta->created_at->format('d/m/Y H:i') }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header">
-            <h5>Citas ({{ $fisioterapeuta->citas->count() }})</h5>
-        </div>
-        <div class="card-body">
-            @if ($fisioterapeuta->citas->count() > 0)
-            <table class="table table-sm">
-                <thead>
+        @if ($fisioterapeuta->citas->count() > 0)
+            <x-ui.table>
+                <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wide text-slate-500">
                     <tr>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Paciente</th>
-                        <th>Motivo</th>
-                        <th>Estado</th>
+                        <th class="px-6 py-3">Fecha</th>
+                        <th class="px-6 py-3">Hora</th>
+                        <th class="px-6 py-3">Paciente</th>
+                        <th class="px-6 py-3">Motivo</th>
+                        <th class="px-6 py-3">Estado</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-slate-100">
                     @foreach ($fisioterapeuta->citas as $cita)
-                    <tr>
-                        <td>{{ $cita->fecha_cita }}</td>
-                        <td>{{ $cita->hora_cita }}</td>
-                        <td>{{ $cita->paciente->usuario->nombre ?? 'N/A' }}</td>
-                        <td>{{ $cita->motivo }}</td>
-                        <td><span class="badge bg-secondary">{{ $cita->estado }}</span></td>
-                    </tr>
+                        <tr>
+                            <td class="px-6 py-3">{{ $cita->fecha_cita }}</td>
+                            <td class="px-6 py-3">{{ $cita->hora_cita }}</td>
+                            <td class="px-6 py-3">{{ $cita->paciente->nombre ?? 'N/A' }}</td>
+                            <td class="px-6 py-3">{{ $cita->motivo }}</td>
+                            <td class="px-6 py-3"><x-ui.badge>{{ $cita->estado }}</x-ui.badge></td>
+                        </tr>
                     @endforeach
                 </tbody>
-            </table>
-            @else
-            <p class="text-muted">No hay citas registradas</p>
-            @endif
-        </div>
-    </div>
-</div>
-@endsection
+            </x-ui.table>
+        @else
+            <p class="px-6 py-6 text-sm text-slate-400">No hay citas registradas</p>
+        @endif
+    </x-ui.card>
+</x-layouts.internal>

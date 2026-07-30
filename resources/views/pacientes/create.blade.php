@@ -1,89 +1,34 @@
-@extends('layouts.app')
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h1 class="mb-4">Crear Nuevo Paciente</h1>
+<x-layouts.internal :title="'Nuevo Paciente - FisioCare Ayla'">
+    <x-ui.page-header title="Crear Nuevo Paciente" />
 
-            @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Errores:</strong>
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <x-ui.card class="mx-auto max-w-2xl">
+        <form action="{{ route('pacientes.store') }}" method="POST" class="space-y-5">
+            @csrf
+
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <x-ui.input type="text" name="nombre" label="Nombre" :value="old('nombre')" required />
+                <x-ui.input type="text" name="apellido" label="Apellido" :value="old('apellido')" />
             </div>
-            @endif
 
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('pacientes.store') }}" method="POST">
-                        @csrf
-
-                        <div class="mb-3">
-                            <label for="usuario_id" class="form-label">Usuario</label>
-                            <select class="form-select @error('usuario_id') is-invalid @enderror" id="usuario_id" name="usuario_id" required>
-                                <option value="">Seleccione un usuario</option>
-                                @foreach ($usuarios as $usuario)
-                                <option value="{{ $usuario->id }}" {{ old('usuario_id') == $usuario->id ? 'selected' : '' }}>
-                                    {{ $usuario->nombre }} {{ $usuario->apellido }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('usuario_id')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control @error('fecha_nacimiento') is-invalid @enderror"
-                                id="fecha_nacimiento" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required>
-                            @error('fecha_nacimiento')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="direccion" class="form-label">Dirección</label>
-                            <input type="text" class="form-control @error('direccion') is-invalid @enderror"
-                                id="direccion" name="direccion" value="{{ old('direccion') }}" required>
-                            @error('direccion')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="text" class="form-control @error('telefono') is-invalid @enderror"
-                                id="telefono" name="telefono" value="{{ old('telefono') }}" required>
-                            @error('telefono')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="sexo" class="form-label">Sexo</label>
-                            <select class="form-select @error('sexo') is-invalid @enderror" id="sexo" name="sexo" required>
-                                <option value="">Seleccione</option>
-                                <option value="M" {{ old('sexo') == 'M' ? 'selected' : '' }}>Masculino</option>
-                                <option value="F" {{ old('sexo') == 'F' ? 'selected' : '' }}>Femenino</option>
-                            </select>
-                            @error('sexo')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-success">Guardar</button>
-                            <a href="{{ route('pacientes.index') }}" class="btn btn-secondary">Cancelar</a>
-                        </div>
-                    </form>
-                </div>
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <x-ui.input type="text" name="cedula" label="Cédula" :value="old('cedula')" />
+                <x-ui.input type="email" name="correo" label="Correo" :value="old('correo')" />
             </div>
-        </div>
-    </div>
-</div>
-@endsection
+
+            <x-ui.input type="date" name="fecha_nacimiento" label="Fecha de Nacimiento" :value="old('fecha_nacimiento')" required />
+            <x-ui.input type="text" name="direccion" label="Dirección" :value="old('direccion')" required />
+            <x-ui.input type="text" name="telefono" label="Teléfono" :value="old('telefono')" required />
+
+            <x-ui.select name="sexo" label="Sexo" required>
+                <option value="">Seleccione</option>
+                <option value="M" {{ old('sexo') == 'M' ? 'selected' : '' }}>Masculino</option>
+                <option value="F" {{ old('sexo') == 'F' ? 'selected' : '' }}>Femenino</option>
+            </x-ui.select>
+
+            <div class="flex gap-3 pt-2">
+                <x-ui.button type="submit" variant="success">Guardar</x-ui.button>
+                <x-ui.button :href="route('pacientes.index')" variant="secondary">Cancelar</x-ui.button>
+            </div>
+        </form>
+    </x-ui.card>
+</x-layouts.internal>

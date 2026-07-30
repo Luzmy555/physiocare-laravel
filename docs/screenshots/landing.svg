@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="960" height="600" fill="#eef2f7"/>
+  <!-- browser chrome -->
+  <rect width="960" height="36" fill="#e2e8f0"/>
+  <circle cx="18" cy="18" r="5" fill="#f87171"/>
+  <circle cx="36" cy="18" r="5" fill="#fbbf24"/>
+  <circle cx="54" cy="18" r="5" fill="#34d399"/>
+  <rect x="90" y="8" width="500" height="20" rx="10" fill="#ffffff"/>
+  <text x="105" y="22" font-size="11" fill="#64748b">fisiocarealya.com</text>
+
+  <!-- nav -->
+  <rect x="0" y="36" width="960" height="56" fill="#0f172a"/>
+  <text x="32" y="70" font-size="20" fill="#ffffff" font-weight="bold">FisioCare Ayla</text>
+  <text x="560" y="69" font-size="13" fill="#cbd5e1">Inicio</text>
+  <text x="620" y="69" font-size="13" fill="#cbd5e1">Servicios</text>
+  <text x="700" y="69" font-size="13" fill="#cbd5e1">Nosotros</text>
+  <rect x="770" y="52" width="80" height="26" rx="13" fill="transparent" stroke="#0066cc" stroke-width="2"/>
+  <text x="787" y="69" font-size="12" fill="#0066cc">Entrar</text>
+  <rect x="860" y="52" width="70" height="26" rx="13" fill="#0066cc"/>
+  <text x="878" y="69" font-size="12" fill="#fff">Registro</text>
+
+  <!-- hero -->
+  <rect x="0" y="92" width="960" height="300" fill="#0b3d91"/>
+  <rect x="0" y="92" width="960" height="300" fill="url(#g)"/>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0066cc" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+  </defs>
+  <text x="48" y="200" font-size="38" fill="#ffffff" font-weight="bold">Recupera tu Movilidad,</text>
+  <text x="48" y="245" font-size="38" fill="#ffffff" font-weight="bold">Vive Sin Dolor</text>
+  <text x="48" y="280" font-size="15" fill="#dbeafe">Atención especializada en fisioterapia, rehabilitación</text>
+  <text x="48" y="302" font-size="15" fill="#dbeafe">y terapia manual con enfoque personalizado.</text>
+  <rect x="48" y="325" width="190" height="42" rx="21" fill="#ffffff"/>
+  <text x="72" y="351" font-size="14" fill="#0066cc" font-weight="bold">Agendar mi cita</text>
+
+  <!-- services section -->
+  <text x="48" y="440" font-size="20" fill="#0f172a" font-weight="bold">Nuestros Servicios Especializados</text>
+  <g font-size="11" fill="#334155">
+    <rect x="48" y="460" width="192" height="110" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+    <circle cx="80" cy="490" r="14" fill="#dbeafe"/>
+    <text x="66" y="522" font-size="12" fill="#0f172a" font-weight="bold">Traumatológica</text>
+
+    <rect x="256" y="460" width="192" height="110" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+    <circle cx="288" cy="490" r="14" fill="#dbeafe"/>
+    <text x="274" y="522" font-size="12" fill="#0f172a" font-weight="bold">Deportiva</text>
+
+    <rect x="464" y="460" width="192" height="110" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+    <circle cx="496" cy="490" r="14" fill="#dbeafe"/>
+    <text x="482" y="522" font-size="12" fill="#0f172a" font-weight="bold">Geriátrica</text>
+
+    <rect x="672" y="460" width="240" height="110" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+    <circle cx="704" cy="490" r="14" fill="#dbeafe"/>
+    <text x="690" y="522" font-size="12" fill="#0f172a" font-weight="bold">Cardiovascular</text>
+  </g>
+</svg>

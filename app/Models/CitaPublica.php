@@ -41,4 +41,10 @@ class CitaPublica extends Model
     {
         return $this->belongsTo(Fisioterapeuta::class);
     }
+
+    // Receta asociada a esta cita (si el médico la redactó)
+    public function receta()
+    {
+        return $this->hasOne(Receta::class);
+    }
 }
