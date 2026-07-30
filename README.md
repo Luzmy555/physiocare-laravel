@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/images/Logo%20actualizado.png" width="96" alt="FisioCare Ayla logo" />
+  <img src="public/images/logo.jpg" width="96" alt="FisioCare Ayla logo" />
 
   # FisioCare Ayla
 
