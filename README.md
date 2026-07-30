@@ -25,24 +25,20 @@ It's a server-rendered Laravel app on purpose: Blade views, Tailwind CSS for sty
 
 ## Screenshots
 
-> The mockups below illustrate the current pages and layout; swap them for real screenshots (`docs/screenshots/`) whenever you have a deployed instance to capture.
-
 <table>
   <tr>
     <td width="100%" colspan="2" align="center">
-      <img src="docs/screenshots/landing.svg" alt="Public landing page — hero, services and specialties" /><br/>
-      <sub align="center">Public site — hero, specialties &amp; services</sub>
+      <img src="docs/screenshots/landing.gif" alt="Public landing page walkthrough — hero, specialties, testimonials and FAQ" /><br/>
+      <sub align="center">Public site — hero, specialties, testimonials &amp; FAQ</sub>
     </td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/screenshots/agendar-cita.svg" alt="Online appointment booking form" /><br/><sub align="center">Online booking — specialty → therapist → live time slots</sub></td>
-    <td width="50%"><img src="docs/screenshots/dashboard-admin.svg" alt="Administrator dashboard" /><br/><sub align="center">Administrator dashboard — clinic-wide stats</sub></td>
+    <td width="50%"><img src="docs/screenshots/login.png" alt="Login screen" /><br/><sub align="center">Login</sub></td>
+    <td width="50%"><img src="docs/screenshots/dashboard-admin.png" alt="Administrator dashboard with sidebar navigation and clinic-wide stats" /><br/><sub align="center">Administrator dashboard</sub></td>
   </tr>
   <tr>
-    <td width="50%" colspan="2" align="center">
-      <img src="docs/screenshots/dashboard-fisioterapeuta.svg" alt="Physiotherapist dashboard" width="70%" /><br/>
-      <sub align="center">Physiotherapist dashboard — today's agenda &amp; recent clinical notes</sub>
-    </td>
+    <td width="50%"><img src="docs/screenshots/dashboard-fisioterapeuta.png" alt="Physiotherapist dashboard with today's agenda" /><br/><sub align="center">Physiotherapist dashboard — today's agenda &amp; recent clinical notes</sub></td>
+    <td width="50%"><img src="docs/screenshots/gestion-citas.png" alt="Admin appointment management screen with filters and confirm/cancel actions" /><br/><sub align="center">Admin — appointment management</sub></td>
   </tr>
 </table>
 

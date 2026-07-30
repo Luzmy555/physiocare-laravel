@@ -25,24 +25,20 @@ Es una aplicación Laravel renderizada del lado del servidor, a propósito: vist
 
 ## Capturas de pantalla
 
-> Los mockups de abajo representan las páginas y el diseño actuales; reemplázalos por capturas reales (`docs/screenshots/`) cuando tengas una instancia desplegada de la cual tomarlas.
-
 <table>
   <tr>
     <td width="100%" colspan="2" align="center">
-      <img src="docs/screenshots/landing.svg" alt="Página pública de inicio — hero, servicios y especialidades" /><br/>
-      <sub align="center">Sitio público — hero, especialidades y servicios</sub>
+      <img src="docs/screenshots/landing.gif" alt="Recorrido de la página pública — hero, especialidades, testimonios y preguntas frecuentes" /><br/>
+      <sub align="center">Sitio público — hero, especialidades, testimonios y preguntas frecuentes</sub>
     </td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/screenshots/agendar-cita.svg" alt="Formulario público de agendamiento de citas" /><br/><sub align="center">Agendamiento en línea — especialidad → fisioterapeuta → horarios en vivo</sub></td>
-    <td width="50%"><img src="docs/screenshots/dashboard-admin.svg" alt="Panel de administrador" /><br/><sub align="center">Panel de administrador — estadísticas de la clínica</sub></td>
+    <td width="50%"><img src="docs/screenshots/login.png" alt="Pantalla de inicio de sesión" /><br/><sub align="center">Inicio de sesión</sub></td>
+    <td width="50%"><img src="docs/screenshots/dashboard-admin.png" alt="Panel de administrador con navegación lateral y estadísticas de la clínica" /><br/><sub align="center">Panel de administrador</sub></td>
   </tr>
   <tr>
-    <td width="50%" colspan="2" align="center">
-      <img src="docs/screenshots/dashboard-fisioterapeuta.svg" alt="Panel del fisioterapeuta" width="70%" /><br/>
-      <sub align="center">Panel del fisioterapeuta — agenda del día y notas clínicas recientes</sub>
-    </td>
+    <td width="50%"><img src="docs/screenshots/dashboard-fisioterapeuta.png" alt="Panel del fisioterapeuta con la agenda del día" /><br/><sub align="center">Panel del fisioterapeuta — agenda del día y notas clínicas recientes</sub></td>
+    <td width="50%"><img src="docs/screenshots/gestion-citas.png" alt="Pantalla de gestión de citas del admin, con filtros y acciones de confirmar/cancelar" /><br/><sub align="center">Admin — gestión de citas</sub></td>
   </tr>
 </table>
 
